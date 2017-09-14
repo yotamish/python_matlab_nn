@@ -8,7 +8,6 @@ net_Q=feedforwardnet([WeightsPerLayer,WeightsPerLayer,40]);
 
 X=[1,0.5,-1,-0.5,1;1,-1,1,0.5,1;1,0.5,-1,-0.5,1;1,0.5,-1,-0.5,1];   %X is the input and determines the input dimension of the nn (here output is 4X1) - numbers are only for determining dimensions and have no meaning/impact
 T=[1,0,1,0,1;0,1,0,1,0;1,0,1,0,1;1,0,1,0,1;1,0,1,0,1];  %T is the target and determines the output dimensions of the nn (here output is 5X1) - numbers are only for determining dimensions and have no meaning/impact
-cause I'm getting bad outputs
 
 net_Q.trainFcn = 'traingdm';          %Gradient Descent Backpropagation
 net_Q.trainParam.epochs = 1;           %1 epoch becuase we are batch-training
@@ -17,7 +16,7 @@ net_Q.trainParam.mc = 0.99;
 net_Q.trainParam.showWindow=false;    %show GUI for training results
 net_Q.divideFcn='dividetrain';       %assign all examples to training (and not to validation/testing)
 net_Q.performFcn='mse';             %mean square error performance function
-%net_Q.performFcn='crossentropy';     %mean square error performance function
+%net_Q.performFcn='crossentropy';  
 init(net_Q);                        %initialize net
 net_Q=train(net_Q,X,T);
 
@@ -82,9 +81,9 @@ net_Q.b{4}(:) = A.arr';
 
 % ans =
 % 
-%   4ª1 cell array
+%   4Âª1 cell array
 % 
-%     [5ª4 double]
+%     [5Âª4 double]
 %     []
 %     []
 %     []
@@ -102,12 +101,12 @@ net_Q.b{4}(:) = A.arr';
 % 
 % ans =
 % 
-%   4ª4 cell array
+%   4Âª4 cell array
 % 
 %               []               []               []    []
-%     [5ª5 double]               []               []    []
-%               []    [40ª5 double]               []    []
-%               []               []    [3ª40 double]    []
+%     [5Âª5 double]               []               []    []
+%               []    [40Âª5 double]               []    []
+%               []               []    [3Âª40 double]    []
 
 %go to net1.LW{2,1} for example
 %and then assign values like this: net1.LW{2,1}(1,1)=3
@@ -121,14 +120,14 @@ net_Q.b{4}(:) = A.arr';
 % 
 % ans =
 % 
-%   4ª1 cell array
+%   4Âª1 cell array
 % 
-%     [100ª1 double]
-%     [100ª1 double]
-%     [ 40ª1 double]
-%     [  5ª1 double]
+%     [100Âª1 double]
+%     [100Âª1 double]
+%     [ 40Âª1 double]
+%     [  5Âª1 double]
 
-% net.b{4} is the content of [  5ª1 double]
+% net.b{4} is the content of [  5Âª1 double]
 
 end
 
