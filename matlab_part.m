@@ -1,22 +1,20 @@
-function [ net_Q ] = Q_nn_init_DQN_from_simulation( WeightsPerLayer )
+function [ net_Q ] = Q_nn_init( Q_NET_SIZES,INPUT_SIZE,OUTPUT_SIZE )
 
 %   import weights and biases for a 100X100X40 Q neural network for the DQN algorithm, pre-trained in python using Tensorflow
 
 
 %********************************define and init Q nn********************
-net_Q=feedforwardnet([WeightsPerLayer,WeightsPerLayer,40]);
-
-X=[1,0.5,-1,-0.5,1;1,-1,1,0.5,1;1,0.5,-1,-0.5,1;1,0.5,-1,-0.5,1];   %X is the input and determines the input dimension of the nn (here output is 4X1) - numbers are only for determining dimensions and have no meaning/impact
-T=[1,0,1,0,1;0,1,0,1,0;1,0,1,0,1;1,0,1,0,1;1,0,1,0,1];  %T is the target and determines the output dimensions of the nn (here output is 5X1) - numbers are only for determining dimensions and have no meaning/impact
+net_Q=feedforwardnet(Q_NET_SIZES);
+X=rand([INPUT_SIZE,INPUT_SIZE]);    %initialize just for setting the dimensions for the nn. Initiazliation of the weights and biases is later
+T=rand([OUTPUT_SIZE,INPUT_SIZE]);   %initialize just for setting the dimensions for the nn. Initiazliation of the weights and biases is later
 
 net_Q.trainFcn = 'traingdm';          %Gradient Descent Backpropagation
-net_Q.trainParam.epochs = 1;           %1 epoch becuase we are batch-training
+net_Q.trainParam.epochs = 1;           %1 epoch becuase I wanted batch training
 net_Q.trainParam.lr = 0.0001;
 net_Q.trainParam.mc = 0.99;
 net_Q.trainParam.showWindow=false;    %show GUI for training results
 net_Q.divideFcn='dividetrain';       %assign all examples to training (and not to validation/testing)
 net_Q.performFcn='mse';             %mean square error performance function
-%net_Q.performFcn='crossentropy';  
 init(net_Q);                        %initialize net
 net_Q=train(net_Q,X,T);
 
@@ -73,6 +71,8 @@ net_Q.b{3}(:) = A.arr';
 A = load('net.b{4}.mat');
 net_Q.b{4}(:) = A.arr';
 
+
+%% the following comments are left just for clarification(?) and have no sense whatsover!
 
 %load values to network:
 %this example is for a 4 input, 3 output,hidden layers: 10X10X40 
